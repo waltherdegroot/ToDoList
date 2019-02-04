@@ -1,6 +1,9 @@
-	<footer>
+	</div>
+	<div class="footer">
 		&copy; Walther | Student ICT DaVinci College
-	</footer>
-	<script src="<?= URL ?>public/js/main.js"></script>
+	</div>
+	<script src="<?= URL ?>js/main.js"></script>
+	<script src="<?= URL ?>js/bootstrap.js"></script>
+	<script src="<?= URL ?>js/bootstrap.js.map"></script>
 </body>
 </html>
