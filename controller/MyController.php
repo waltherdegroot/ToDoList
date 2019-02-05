@@ -1,11 +1,15 @@
 <?php
 
-    require(ROOT . "model/ListsModel.php");
+    require(ROOT . "model/MyModel.php");
 
     function Index(){
-        render("My/Lists");
+        render("My/Lists",array(
+            'lists' => GetLists()
+        ));
     }
 
-    function GetAllListsUser(){
-        
+    function EditList($ID){
+        render("My/ListEdit",array(
+            'list' => GetList($ID)
+        ));
     }

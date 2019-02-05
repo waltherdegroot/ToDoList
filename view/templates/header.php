@@ -24,6 +24,13 @@
 				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/index">My Lists</a></li>
 			<?php endif; ?>
 		</ul>
+		<?php if($_SESSION["Authorized"] == "true"):?>
+			<div>
+				<?= $_SESSION["Username"] ?>
+				
+				<a class="logout" href="<?= URL ?>Users/logout">logout</a>
+			</div>
+		<?php endif; ?>
 	</nav>
 	<div class="main-content container text-center">
 	
