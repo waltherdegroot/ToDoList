@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +17,12 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="<?= URL ?>home/index">Home</a></li>
-			<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>Users/signin">sign-in</a></li>
-			<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>Users/signup">sign-up</a></li>
+			<?php if($_SESSION["Authorized"] != "true"):?>
+				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>Users/signin">sign-in</a></li>
+				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>Users/signup">sign-up</a></li>
+			<?php else: ?>
+				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/index">My Lists</a></li>
+			<?php endif; ?>
 		</ul>
 	</nav>
 	<div class="main-content container text-center">

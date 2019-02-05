@@ -1,8 +1,9 @@
 <?php
-
     require(ROOT . "model/UsersModel.php");
 
     function index(){
+        
+        echo session_status();
         render("Users/index");
     }
 
@@ -33,6 +34,24 @@
             );
 
             $loggedin = checkUser($data);
+
+            print_r($loggedin[0]["Allowed"]);
+
+            if($loggedin[0]["Allowed"] == "true"){
+                $_SESSION["Authorized"] = "true";
+                $_SESSION["Username"] = $loggedin[0]["Username"];
+                $_SESSION["userId"] = $loggedin[0]["id"];
+                $_SESSION["email"] = $loggedin[0]["Email"];
+                $_SESSION["Role"] = $loggedin[0]["Role"];
+
+                print_r($loggedin);
+
+                //header("Location:../My/index");
+                exit;
+            }
+            else{
+
+            }
 
         }
         render("Users/signin");
