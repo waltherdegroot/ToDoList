@@ -20,8 +20,11 @@
             </div>
             
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     ToDo
+                </div>
+                <div class="col-md-2">
+                    Duration(in min)
                 </div>
                 <div class="col-md-8">
                     Description
@@ -30,8 +33,11 @@
             
             <div id="inputs" class="form-group">
                 <div id="itemRow0" class="row">
-                    <div class="col-md-4">
-                        <input id="itemName0" type="text" class="form-control" name="itemName[0]" placeholder="Name ... " autocomplete="off" required>
+                    <div class="col-md-2">
+                        <input id="itemName0" type="text" class="form-control name_input" name="itemName[0]" placeholder="Name ... " autocomplete="off" required>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="itemDuration0" type="number" class="form-control num_input" name="itemDuration[0]" autocomplete="off" value="10" min="10" required>
                     </div>
                     <div class="col-md-8">
                         <textarea id="itemName0" class="form-control" name="itemDescription[0]" placeholder="Description ... "></textarea>
@@ -52,8 +58,11 @@
     $("#addInput").on("click",function(){
         var html = `
             <div class="row" id="itemRow${itemCount}">
-                <div class="col-md-4">
-                    <input id="itemName${itemCount}" type="text" class="form-control" name="itemName[${itemCount}]" placeholder="Name ... " autocomplete="off" required>
+                <div class="col-md-2">
+                    <input id="itemName${itemCount}" type="text" class="form-control name_input" name="itemName[${itemCount}]" placeholder="Name ... " autocomplete="off" required>
+                </div>
+                <div class="col-md-2">
+                    <input id="itemDuration${itemCount}" type="number" class="form-control num_input" name="itemDuration[${itemCount}]" autocomplete="off" value="10" min="10" required>
                 </div>
                 <div class="col-md-7">
                     <textarea id="itemDescription${itemCount}" type="text" class="form-control" name="itemDescription[${itemCount}]" placeholder="Description ... "></textarea>
@@ -73,7 +82,8 @@
         $("#itemRow" + itemId).remove();
 
         var inputRows = $("#inputs > div");
-        var inputNames = $("#inputs > div > div > input");
+        var inputNames = $("#inputs > div > div > .name_input");
+        var numInputs = $("#inputs > div > div > .num_input");
         var descriptions = $("#inputs > div > div > textarea");
         var removeBtns = $("#inputs > div > div > span");
 
@@ -88,6 +98,8 @@
                 $(inputNames[i]).attr("id","itemName"+i);
                 $(inputNames[i]).attr("name","itemName["+i+"]");
 
+                $(numInputs[i]).attr("id","itemDuration"+i);
+                $(numInputs[i]).attr("name","itemDuration["+i+"]");
 
                 $(descriptions[i]).attr("id","itemDescription"+i);
                 $(descriptions[i]).attr("name","itemDescription["+i+"]");
@@ -95,10 +107,9 @@
                 $(removeBtns[i-1]).attr("id","remove"+i);
             }
 
-            if(itemcount > 0){
+            if(itemCount > 0){
                 itemCount = itemCount - 1;
             }
         }
     });
 </script>
-

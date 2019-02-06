@@ -19,6 +19,7 @@
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="<?= URL ?>home/index">Home</a></li>
 			<?php if($_SESSION["Authorized"] == "true"):?>
+				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/CreateList">Create List</a></li>
 				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/index">My Lists</a></li>
 			<?php endif; ?>
 		</ul>
