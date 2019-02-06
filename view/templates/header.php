@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="<?= URL ?>css/style.css">
 	<link rel="stylesheet" href="<?= URL ?>css/bootstrap.css">
 	<link rel="stylesheet" href="<?= URL ?>css/bootstrap.css.map">
+	<script src="<?= URL ?>js/jquery-3.3.1.min.js"></script>
 
 	<title>To Do List</title>	
 </head>
@@ -17,10 +18,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="<?= URL ?>home/index">Home</a></li>
-			<?php if($_SESSION["Authorized"] != "true"):?>
-				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>Users/signin">sign-in</a></li>
-				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>Users/signup">sign-up</a></li>
-			<?php else: ?>
+			<?php if($_SESSION["Authorized"] == "true"):?>
 				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/index">My Lists</a></li>
 			<?php endif; ?>
 		</ul>
@@ -29,6 +27,11 @@
 				<?= $_SESSION["Username"] ?>
 				
 				<a class="logout" href="<?= URL ?>Users/logout">logout</a>
+			</div>
+		<?php else: ?>
+			<div>
+				<a href="<?= URL ?>Users/signin">sign-in</a>
+				<a href="<?= URL ?>Users/signup">sign-up</a>
 			</div>
 		<?php endif; ?>
 	</nav>

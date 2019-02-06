@@ -17,6 +17,45 @@
     margin: 0 auto;
 }
 
-.centerAlign{
-    margin: 0 auto;
+.items{
+    margin-bottom: 2%;
+    border-bottom: 1px solid dimgray;
+}
+
+.item-card{
+    margin:0 auto;
+}
+
+.item-header{
+    margin-bottom: 5%;
+}
+
+.item-Body{
+    margin-top: 6%;
+}
+
+.item-group{
+    min-height: 10% ;
+    margin-top:2%;
+}
+
+.item-Name{
+    position: relative;
+    text-align: left;
+}
+
+.item-Status{
+    top:0%;
+    text-align: right;
+}
+
+.item-Description{
+    margin:0;
+}
+
+.form-control{
+    margin-top:5px;
+}
+.del-btn{
+    margin-top:5px;
 }

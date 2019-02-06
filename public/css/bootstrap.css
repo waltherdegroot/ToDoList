@@ -1865,7 +1865,6 @@ pre code {
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  margin-top:2%;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -4173,6 +4172,7 @@ input[type="button"].btn-block {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  margin-bottom: 2%;
 }
 
 .navbar > .container,
