@@ -2,8 +2,6 @@
     require(ROOT . "model/UsersModel.php");
 
     function index(){
-        
-        echo session_status();
         render("Users/index");
     }
 

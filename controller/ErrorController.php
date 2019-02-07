@@ -2,6 +2,5 @@
 
 function error_404()
 {
-	header("Location:../");
-	exit;
+	render("Error/404");
 }

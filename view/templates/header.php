@@ -21,7 +21,21 @@
 			<?php if($_SESSION["Authorized"] == "true"):?>
 				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/CreateList">Create List</a></li>
 				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/index">My Lists</a></li>
+
+				<?php if($_SESSION["Role"] == "Admin"):?>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown">
+							Admin
+						</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="<?= URL ?>Admin/Users">User Management</a>
+							<a class="dropdown-item" href="<?= URL ?>Admin/Lists">List Management</a>
+						</div>
+					</li>
+				<?php endif ?>
+
 			<?php endif; ?>
+			
 		</ul>
 		<?php if($_SESSION["Authorized"] == "true"):?>
 			<div>

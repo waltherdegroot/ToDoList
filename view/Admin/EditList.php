@@ -1,22 +1,20 @@
 <?php
-    $id = $list[0]["ListId"];
+
 ?>
 <div class="row">
-    <div class="col-md-2">
-
-    </div>
+    <div class="col-md-2"></div>
     <div class="col-md-8">
-        <form action="<?= URL ?>My/EditList/<?= $id ?>" method="POST">
+        <form action="<?= URL ?>Admin/EditList/<?= $List[0]["ListId"] ?>" method="POST">
             <div class="card item-card">       
                 <div class="card-header">
-                    <h3 id="listTitle"><?= $list[0]["ListName"] ?></h3>
-                    <input type="text" id="listName" class="form-control inputs" name="ListName" style="display:none;"  value="<?= $list[0]["ListName"] ?>"/>
+                    <h3 id="listTitle"><?= $List[0]["ListName"] ?> (<?= $List[0]["Username"] ?>)</h3>
+                    <input type="text" id="listName" class="form-control inputs" name="ListName" style="display:none;"  value="<?= $List[0]["ListName"] ?>"/>
                     <input type="hidden" name="ListId" value="<?= $id ?>">
                 </div>
                 <div class="card-body">
                     <?php
                         $i = 0;
-                        foreach($list as $item => $value){
+                        foreach($List as $item => $value){
 
                             $itemId = $value["ItemId"];
                             $itemName = $value["ItemName"];
@@ -72,12 +70,10 @@
             </div>
         </form>
     </div>
-    <div class="col-md-2">
-
-    </div>
+    <div class="col-md-2"></div>
 </div>
+<script>
 
-<script type="text/javascript">
     $(".inputs").prop("disabled",true);
     $("#saveBtn").prop("disabled",true);
 
@@ -87,27 +83,18 @@
 
         $("#cancelBtn").show();
         $("#saveBtn").show();
-        $("#listName").show();
         $("#delCheck").show();
         $("#delBtn").show();
 
         $("#editBtn").hide();
-        $("#listTitle").hide();
     });
 
     $("#cancelBtn").on("click",function(){ 
         location.reload();
     });
 
-    $(".checkbox").on("change", function(){
-        if ($(this).is(':checked')) {
-            var statusId = $(this).attr("id").replace("status","");
-            $(document).find("#itemStatus" + statusId).val("1");
-        }
-        else{
-            var statusId = $(this).attr("id").replace("status","");
-            $(document).find("#itemStatus" + statusId).val("0");
-        }
+    $("#saveBtn").on("click",function(){ 
+        location.reload();
     });
 
     $("#delCheck").on("change", function(){
@@ -120,7 +107,3 @@
     });
 
 </script>
-
-
-
-

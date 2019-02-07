@@ -1,8 +1,5 @@
 <?php
-    if($_SESSION["Authorized"] != "true"){
-        header("Location:../Users/signin");
-        exit;
-    }
+    
 ?>
 <div class="card create-list-card">
 	<div class="card-header card-header-color card-header-dark">

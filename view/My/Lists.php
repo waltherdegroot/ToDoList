@@ -1,8 +1,5 @@
 <?php
-    if($_SESSION["Authorized"] != "true"){
-        header("Location:../Users/signin");
-        exit;
-    }
+
 ?>
 
 <div class="row">
