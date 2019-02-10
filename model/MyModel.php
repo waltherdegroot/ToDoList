@@ -116,3 +116,28 @@
 
         $query->execute();
     }
+
+    function RemoveItemFromList($id){
+        $db = openDatabaseConnection();
+
+        $query = $db->prepare("Delete FROM ItemsList where Id = :Id");
+        $query-> bindparam(':Id',$id);
+        $query->execute();
+    }
+
+    function AddItemsToList($listId,$data){
+        $db = openDatabaseConnection();
+
+        for($i = 0; $i < count($data["itemNames"]); $i++){
+            $duration = (int)$data["itemDurations"][$i];
+
+            $query = $db->prepare("insert into ItemsList(ListId,Name,Description,Duration) values(:listId,:name,:description,:duration)");
+
+            $query-> bindparam(':listId', $listId);
+            $query-> bindparam(':name', $data["itemNames"][$i]);
+            $query-> bindparam(':description', $data["itemDescriptions"][$i]);   
+            $query-> bindparam(':duration', $duration);      
+
+            $query->execute();
+        }
+    }

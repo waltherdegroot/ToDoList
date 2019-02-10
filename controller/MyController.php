@@ -37,6 +37,17 @@
 
                     UpdateListDB($data);
 
+                    if(isset($_POST["newItemName"])){
+                        $newItems = array(
+                            'itemNames' => $_POST["newItemName"],
+                            'itemDescriptions' => $_POST["newItemDescription"],
+                            'itemDurations' => $_POST["newItemDuration"]
+                        );
+                        AddItemsToList($_POST["ListId"],$newItems);
+                        header("Location: ". URL ."My");
+                        exit;
+                    }
+
                     $ID = $_POST["ListId"];
                 }
             }
@@ -71,6 +82,10 @@
             if($data["delete"]){
                 DeleteListDB($data["ListId"]);
             }
+        }
+
+        function RemoveItem($id){
+            RemoveItemFromList($id);
         }
     }
     

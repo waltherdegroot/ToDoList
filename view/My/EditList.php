@@ -40,9 +40,12 @@
                                     <div class='col-md-3 item-Duration'>
                                         <input type='number' class='form-control inputs' name='itemDuration[".$i."]' min='10' value='".$itemDuration."'/> 
                                     </div>
-                                    <div class='col-md-6 item-Status'>
+                                    <div class='col-md-3 item-Status'>
                                             ".$checkbox."
                                             <input type='hidden' id='itemStatus".$i."' name='itemStatus[".$i."]' value='".$itemStatus."'>
+                                    </div>
+                                    <div class='col-md-3 item-Status'>
+                                            <span id='itemDel".$itemId."' class='btn btn-warning item-Delete'> Delete </span>
                                     </div>
                                 </div>
                                 <div class='item-body'>
@@ -57,6 +60,9 @@
                             echo $html;
                         }
                     ?>
+                    <div id="inputs">
+
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="float-left">
@@ -65,6 +71,7 @@
                     </div>
                     <div class="float-right">
                         <span id="cancelBtn" class="btn btn-warning" style="display: none;">Cancel</span>
+                        <span id="addInputBtn" class="btn btn-secondary" style="display: none;">add an input</span>
                         <span id="editBtn" class="btn btn-warning">Edit</span>
                         <input type="submit" name="save" id="saveBtn" class="btn btn-success" style="display: none;" value="Save">
                     </div>
@@ -90,6 +97,7 @@
         $("#listName").show();
         $("#delCheck").show();
         $("#delBtn").show();
+        $("#addInputBtn").show();
 
         $("#editBtn").hide();
         $("#listTitle").hide();
@@ -117,6 +125,40 @@
         else{
             $(document).find("#delBtn").prop("disabled",true);
         }
+    });
+
+    $(".item-Delete").on("click", function(){
+        var itemId = $(this).attr("id").replace("itemDel","");
+        
+        $.ajax({
+        url: "<?= URL ?>My/RemoveItem/" + itemId,
+        context: this
+        }).done(function() {
+            location.reload();
+        });
+    });
+
+    var itemCount = 0; 
+
+    $("#addInputBtn").on("click",function(){
+        var html = `
+            <div class="row" id="newItemRow${itemCount}">
+                <div class="col-md-2">
+                    <input id="newItemName${itemCount}" type="text" class="form-control new_name_input" name="newItemName[${itemCount}]" placeholder="Name ... " autocomplete="off" required>
+                </div>
+                <div class="col-md-2">
+                    <input id="newItemDuration${itemCount}" type="number" class="form-control new_num_input" name="newItemDuration[${itemCount}]" autocomplete="off" value="10" min="10" required>
+                </div>
+                <div class="col-md-7">
+                    <textarea id="newItemDescription${itemCount}" type="text" class="form-control new_textarea" name="newItemDescription[${itemCount}]" placeholder="Description ... "></textarea>
+                </div>
+                <div class="col-md-1">
+                    <span id="remove${itemCount}" class="btn btn-warning del-btn removeNewItem"> - </span>
+                </div>
+            </div>
+        `;
+        $("#inputs").append(html);
+        itemCount = itemCount + 1;
     });
 
 </script>
