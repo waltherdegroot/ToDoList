@@ -2,19 +2,32 @@
 
 ?>
 
-<div class="row">
-    <div class="col-md-12 all-lists">
-        <?php if(count($lists) <= 0): ?>
-            <div>
-                <h3>Nothing found 😢</h3>
+<div class="row">    
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>My lists</h3>
             </div>
-        <?php endif ?>
-        <?php foreach($lists as $list => $value):?>
+            <div class="card-body">
+                <?php if(count($lists) <= 0): ?>
+                    <div>
+                        <h3>Nothing found 😢</h3>
+                    </div>
+                <?php endif ?>
+                <?php foreach($lists as $list => $value):?>
+                    <a href="<?= URL ?>My/EditList/<?= $value["Id"] ?>">
                         <div class="list">
-                            <a href="<?= URL ?>My/EditList/<?= $value["Id"] ?>">
-                                <?= $value["Name"] ?>
-                            </a>
+                            <?= $value["Name"] ?>
                         </div>
-        <?php endforeach ?>
+                    </a>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+
     </div>
 </div>
