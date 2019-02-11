@@ -19,7 +19,7 @@
                     );
 
                     DeleteList($data);
-                    header("Location:../My/");
+                    header("Location:".URL."My/");
                     exit;
                 }
                 
@@ -71,7 +71,7 @@
 
                 CreateListDB($data);
 
-                header("Location:../My/index");
+                header("Location:".URL."My/index");
                 exit;
             }
 

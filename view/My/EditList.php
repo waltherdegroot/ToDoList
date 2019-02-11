@@ -16,49 +16,53 @@
                 <div class="card-body">
                     <?php
                         $i = 0;
-                        foreach($list as $item => $value){
+                        if($list[0]["ItemName"] != null){
+                            foreach($list as $item => $value){
 
-                            $itemId = $value["ItemId"];
-                            $itemName = $value["ItemName"];
-                            $itemDescription = $value["ItemDescription"];
-                            $itemStatus = $value["ItemStatus"];
-                            $itemDuration = $value["ItemDuration"];
+                                $itemId = $value["ItemId"];
+                                $itemName = $value["ItemName"];
+                                $itemDescription = $value["ItemDescription"];
+                                $itemStatus = $value["ItemStatus"];
+                                $itemDuration = $value["ItemDuration"];
 
-                            $checkbox = "Done: <input type='checkbox' id='status".$i."' class='checkbox inputs' />";
+                                $checkbox = "Done: <input type='checkbox' id='status".$i."' class='checkbox inputs' />";
 
-                            if($itemStatus != 0){
-                                $checkbox = "Done: <input type='checkbox' id='status".$i."' class='checkbox inputs' checked />";
+                                if($itemStatus != 0){
+                                    $checkbox = "Done: <input type='checkbox' id='status".$i."' class='checkbox inputs' checked />";
+                                }
+
+                                $html = "
+                                <div class='items ' id='item".$itemId."'>
+                                    <div class='item-header row'>
+                                        <input type='hidden' name='itemId[".$i."]' value='".$itemId."'>
+                                        <div class='col-md-3 item-Name'>
+                                            <input type='text' class='form-control inputs' name='itemName[".$i."]'  value='".$itemName."'/>
+                                        </div>
+                                        <div class='col-md-3 item-Duration'>
+                                            <input type='number' class='form-control inputs' name='itemDuration[".$i."]' min='10' value='".$itemDuration."'/> 
+                                        </div>
+                                        <div class='col-md-3 item-Status'>
+                                                ".$checkbox."
+                                                <input type='hidden' id='itemStatus".$i."' name='itemStatus[".$i."]' value='".$itemStatus."'>
+                                        </div>
+                                        <div class='col-md-3 item-Status'>
+                                                <span id='itemDel".$itemId."' class='btn btn-warning item-Delete'> Delete </span>
+                                        </div>
+                                    </div>
+                                    <div class='item-body'>
+                                        <div class='item-group '>
+                                        <textarea type='text' name='itemDescription[".$i."]' class='form-control inputs'>" .$itemDescription. "</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr id='itemHR".$itemId."'>";
+
+                                $i = $i + 1;
                             }
-
-                            $html = "
-                            <div class='items'>
-                                <div class='item-header row'>
-                                    <input type='hidden' name='itemId[".$i."]' value='".$itemId."'>
-                                    <div class='col-md-3 item-Name'>
-                                        <input type='text' class='form-control inputs' name='itemName[".$i."]'  value='".$itemName."'/>
-                                    </div>
-                                    <div class='col-md-3 item-Duration'>
-                                        <input type='number' class='form-control inputs' name='itemDuration[".$i."]' min='10' value='".$itemDuration."'/> 
-                                    </div>
-                                    <div class='col-md-3 item-Status'>
-                                            ".$checkbox."
-                                            <input type='hidden' id='itemStatus".$i."' name='itemStatus[".$i."]' value='".$itemStatus."'>
-                                    </div>
-                                    <div class='col-md-3 item-Status'>
-                                            <span id='itemDel".$itemId."' class='btn btn-warning item-Delete'> Delete </span>
-                                    </div>
-                                </div>
-                                <div class='item-body'>
-                                    <div class='item-group '>
-                                    <textarea type='text' name='itemDescription[".$i."]' class='form-control inputs'>" .$itemDescription. "</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>";
-
-                            $i = $i + 1;
-                            echo $html;
+                        }else{
+                            $html = "<div>No items Found</div>";
                         }
+                        echo $html;
                     ?>
                     <div id="inputs">
 
@@ -134,7 +138,9 @@
         url: "<?= URL ?>My/RemoveItem/" + itemId,
         context: this
         }).done(function() {
-            location.reload();
+            $(document).find("#item"+itemId).prop("disabled",true);
+            $(document).find("#item"+itemId).hide();
+            $(document).find("#itemHR"+itemId).hide();
         });
     });
 

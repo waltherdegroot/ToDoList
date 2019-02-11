@@ -44,7 +44,7 @@
 
                 print_r($loggedin);
 
-                header("Location:../My/index");
+                header("Location:".URL."My/index");
                 exit;
             }
             else{
@@ -58,6 +58,6 @@
     function logout(){
         session_unset();
         session_destroy();
-        header("Location:../Users/signin");
+        header("Location:".URL."Users/signin");
         exit;
     }

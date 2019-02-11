@@ -5,7 +5,8 @@
 
         $query = $db->prepare("SELECT 
             L.Id,
-            L.Name
+            L.Name,
+            (SELECT count(i.Id) from ItemsList i where i.ListId = L.Id) as 'ListItemsCount' 
             FROM ToDoLists L 
             where L.UserId = :uid");
 

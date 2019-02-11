@@ -14,7 +14,7 @@
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(isset($_POST["delete"])){
                         DeleteUser($ID);
-                        header("Location:../Users");
+                        header("Location:". URL ."Admin/Users");
                         exit;
                     }
 
@@ -45,7 +45,7 @@
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(isset($_POST["delete"])){
                         DeleteList($ID);
-                        header("Location:../Lists");
+                        header("Location:". URL ."Admin/Lists");
                         exit;
                     }
 
