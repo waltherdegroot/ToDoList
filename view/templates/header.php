@@ -10,17 +10,28 @@
 	<link rel="stylesheet" href="<?= URL ?>css/style.css">
 	<link rel="stylesheet" href="<?= URL ?>css/bootstrap.css">
 	<link rel="stylesheet" href="<?= URL ?>css/bootstrap.css.map">
+	<link rel="stylesheet" href="<?= URL ?>css/animate.css">
 	<script src="<?= URL ?>js/jquery-3.3.1.min.js"></script>
+	<script src="<?= URL ?>js/main.js"></script>
+	<script src="<?= URL ?>js/bootstrap-notify.js"></script>
 
 	<title>To Do List</title>	
 </head>
-<body class="bg-info">
+
+<?php
+	if($_SESSION["Authorized"] == "true" && $_SESSION["UserColor"] != null){
+		echo "<body class='bg-".$_SESSION["UserColor"]."'>";
+	}
+	else{
+		echo "<body class='bg-info'>";
+	}
+?>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="<?= URL ?>home/index">Home</a></li>
 			<?php if($_SESSION["Authorized"] == "true"):?>
 				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/CreateList">Create List</a></li>
-				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/index">My Lists</a></li>
+				<li class="nav-item-dark"><a class="nav-link" href="<?= URL ?>My/">My Lists</a></li>
 
 				<?php if($_SESSION["Role"] == "Admin"):?>
 					<li class="nav-item dropdown">
@@ -39,14 +50,31 @@
 		</ul>
 		<?php if($_SESSION["Authorized"] == "true"):?>
 			<div>
-				<?= $_SESSION["Username"] ?>
-				
-				<a class="logout" href="<?= URL ?>Users/logout">logout</a>
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown"><?= $_SESSION["Username"] ?></a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="<?= URL ?>My/Settings">Settings</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?= URL ?>Users/logout">Logout</a>
+						</div>
+					</li>
+				</ul>
 			</div>
+
 		<?php else: ?>
+
 			<div>
-				<a href="<?= URL ?>Users/signin">sign-in</a>
-				<a href="<?= URL ?>Users/signup">sign-up</a>
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown">Login/Sign-Up</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="<?= URL ?>Users/signin">Login</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?= URL ?>Users/signup">Signup</a>
+						</div>
+					</li>
+				</ul>
 			</div>
 		<?php endif; ?>
 	</nav>

@@ -1,5 +1,8 @@
 <?php
     require(ROOT . "model/UsersModel.php");
+    require(ROOT . "model/LogModel.php");
+
+    $UserColor;
 
     function index(){
         render("Users/index");
@@ -14,7 +17,12 @@
                     'password' => hash('sha256',$_POST['password'])
                 );
     
-                CreateUser($data);
+                try{
+                    CreateUser($data);
+                }
+                catch(Exception $ex){
+                    AddErrorLog("I","Users/signup",null,$ex);
+                }
 
                 return signin();
             }
@@ -33,18 +41,15 @@
 
             $loggedin = checkUser($data);
 
-            print_r($loggedin[0]["Allowed"]);
-
             if($loggedin[0]["Allowed"] == "true"){
                 $_SESSION["Authorized"] = "true";
                 $_SESSION["Username"] = $loggedin[0]["Username"];
                 $_SESSION["userId"] = $loggedin[0]["id"];
                 $_SESSION["email"] = $loggedin[0]["Email"];
                 $_SESSION["Role"] = $loggedin[0]["Role"];
+                $_SESSION["UserColor"] = $loggedin[0]["Color"];
 
-                print_r($loggedin);
-
-                header("Location:".URL."My/index");
+                header("Location:".URL."My/");
                 exit;
             }
             else{

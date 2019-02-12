@@ -1,6 +1,6 @@
 <?php
 	if($_SESSION["Authorized"] == "true"){
-        header("Location:../My/index");
+        header("Location:../My");
     }
 ?>
 <div class="card login-card">

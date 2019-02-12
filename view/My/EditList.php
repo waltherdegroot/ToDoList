@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <?php
                         $i = 0;
-                        if($list[0]["ItemName"] != null){
+                        if($list[0]["ItemId"] != null){
                             foreach($list as $item => $value){
 
                                 $itemId = $value["ItemId"];
@@ -57,12 +57,15 @@
                                 </div>
                                 <hr id='itemHR".$itemId."'>";
 
+                                echo $html;
+
                                 $i = $i + 1;
                             }
                         }else{
                             $html = "<div>No items Found</div>";
+                            echo $html;
                         }
-                        echo $html;
+                        
                     ?>
                     <div id="inputs">
 
@@ -141,6 +144,8 @@
             $(document).find("#item"+itemId).prop("disabled",true);
             $(document).find("#item"+itemId).hide();
             $(document).find("#itemHR"+itemId).hide();
+
+            CreateNotification("Remove Item Succesful",null,"success");
         });
     });
 

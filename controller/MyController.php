@@ -1,5 +1,6 @@
 <?php
     require(ROOT . "model/MyModel.php");
+    require(ROOT . "model/LogModel.php");
 
     if($_SESSION["Authorized"] == "true"){
 
@@ -17,8 +18,16 @@
                         'delete' => true,
                         'ListId' => $ID
                     );
+                    
+                    try{
+                        DeleteList($data);
+                        AddLog("D","My/EditList",$ID);
+                    }
+                    catch(Exception $ex){
+                        AddErrorLog("D","My/EditList",$ID,$ex);
+                    }
+                    
 
-                    DeleteList($data);
                     header("Location:".URL."My/");
                     exit;
                 }
@@ -35,7 +44,13 @@
                         'itemStats' => $_POST["itemStatus"]
                     );
 
-                    UpdateListDB($data);
+                    try{
+                        UpdateListDB($data);
+                        AddLog("U","My/EditList",$ID);
+                    }
+                    catch(Exception $ex){
+                        AddErrorLog("U","My/EditList",$ID,$ex);
+                    }
 
                     if(isset($_POST["newItemName"])){
                         $newItems = array(
@@ -43,10 +58,19 @@
                             'itemDescriptions' => $_POST["newItemDescription"],
                             'itemDurations' => $_POST["newItemDuration"]
                         );
-                        AddItemsToList($_POST["ListId"],$newItems);
+
+                        try{
+                            AddItemsToList($_POST["ListId"],$newItems);
+                            AddLog("I","My/EditList",$ID);
+                        }
+                        catch(Exception $ex){
+                            AddErrorLog("I","My/EditList",$ID,$ex);
+                        }
                         header("Location: ". URL ."My");
                         exit;
                     }
+
+
 
                     $ID = $_POST["ListId"];
                 }
@@ -68,10 +92,16 @@
                         'itemDurations' => $_POST["itemDuration"]
                     )
                 );
+                
+                try{
+                    CreateListDB($data);
+                    AddLog("I","My/CreateList",null);
+                }
+                catch(Exception $ex){
+                    AddErrorLog("I","My/CreateList",null,$ex);
+                }
 
-                CreateListDB($data);
-
-                header("Location:".URL."My/index");
+                header("Location:".URL."My");
                 exit;
             }
 
@@ -80,12 +110,41 @@
 
         function DeleteList($data){
             if($data["delete"]){
-                DeleteListDB($data["ListId"]);
+                try{  
+                    DeleteListDB($data["ListId"]);
+                    AddLog("D","My/DeleteList",$data["ListId"]);
+                }
+                catch(Exception $ex){
+                    AddErrorLog("D","My/DeleteList",$data["ListId"],$ex);
+                }
             }
         }
 
         function RemoveItem($id){
-            RemoveItemFromList($id);
+            try{
+                AddLog("D","My/RemoveItem",$id);
+                RemoveItemFromList($id);
+            }
+            catch(Exception $ex){
+                AddErrorLog("D","My/RemoveItem",$id,$ex);
+            }
+        }
+
+        function Settings(){
+            render("My/Settings",array(
+                'colors' => GetAllColors()
+            ));
+        }
+
+        function SaveSettings(){
+            try{
+                updateUserSettings($_POST["color"]);
+                AddLog("U","My/SaveSettings",$_SESSION["userId"]);
+            }
+            catch(Exception $ex){
+                AddErrorLog("D","My/RemoveItem",$_SESSION["userId"],$ex);
+            }
+            
         }
     }
     

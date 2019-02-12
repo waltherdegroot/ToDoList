@@ -71,3 +71,18 @@ $(document).on("click",".removeNewItem", function(){
         }
     }
 });
+
+function CreateNotification(message, title, type){
+    $.notify(
+        {
+            message: message,
+            title: title
+        },
+        {
+            type: type, 
+            position: 'fixed', 
+            newest_on_top: true, 
+            allow_dismiss: true
+        }
+    );
+}

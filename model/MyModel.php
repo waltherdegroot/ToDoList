@@ -142,3 +142,22 @@
             $query->execute();
         }
     }
+
+    function GetAllColors(){
+        $db = openDatabaseConnection();
+
+        $query = $db->prepare("SELECT * FROM Colors");
+        $query->execute();
+
+        return $query->fetchall();
+    }
+
+    function updateUserSettings($data){
+        $db = openDatabaseConnection();
+
+        $query = $db->prepare("Update Users set ColorId = :Color where Id = :uid");
+        $query -> bindparam(":Color", $data);
+        $query -> bindparam(":uid", $_SESSION["userId"]);
+
+        $query -> execute();
+    }

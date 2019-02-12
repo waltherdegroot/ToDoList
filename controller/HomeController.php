@@ -2,5 +2,5 @@
 
 function index()
 {
-	render("Users/signin");	
+	render("Home/index");	
 }

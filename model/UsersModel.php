@@ -1,7 +1,4 @@
 <?php
-	function GetUser(){
-
-    }
 
     function CreateUser($data){
         $db = openDatabaseConnection();
@@ -50,10 +47,12 @@
             u.id,
             u.Username,
             u.Email,
-            r.Name as 'Role'
+            r.Name as 'Role',
+            c.ColorName as 'Color'
             from Users u                      
             left join UserRoles ur on u.id = ur.UserId
             left join Roles r on ur.RoleId = r.Id
+            left join Colors c on u.ColorId = c.ColorId
             where u.Email = :email and u.Password = :password
             ");
             
@@ -63,5 +62,26 @@
         $query->execute();
         $result = $query->fetchAll();
         return $result;
+    }
+
+    function GetUserInfo(){
+        $db = openDatabaseConnection();
+        $query = $db->prepare("
+            select u.id,
+            u.Username,
+            u.Email,
+            r.Name as 'Role',
+            c.ColorName as 'Color'
+            from Users u                      
+            left join UserRoles ur on u.id = ur.UserId
+            left join Roles r on ur.RoleId = r.Id
+            left join Colors c on u.ColorId = c.ColorId
+            where u.Id = :uid
+            ");
+        
+        $query->bindParam(':email', $data['email']);
+        $query->execute();
+
+        return $query->fetchAll();
     }
 ?>

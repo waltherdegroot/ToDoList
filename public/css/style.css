@@ -59,3 +59,31 @@
 .del-btn{
     margin-top:5px;
 }
+
+.bg-teal{
+    background-color: #20c997;
+}
+
+.bg-pink{
+    background-color: #e83e8c;
+}
+
+.bg-orange{
+    background-color: #fd7e14;
+}
+
+.bg-yellow{
+    background-color: #ffd454;
+}
+
+.bg-green{
+    background-color: #28a745;
+}
+
+.bg-cyan{
+    background-color: #17a2b8;
+}
+
+.bg-gray{
+    background-color: gray;
+}

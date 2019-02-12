@@ -1,5 +1,6 @@
 <?php
     require(ROOT . "model/AdminModel.php");
+    require(ROOT . "model/LogModel.php");
 
     if($_SESSION["Authorized"] == "true"){
         if($_SESSION["Role"] == "Admin"){
@@ -13,7 +14,14 @@
             function EditUser($ID){
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(isset($_POST["delete"])){
-                        DeleteUser($ID);
+                        try{
+                            DeleteUser($ID);
+                            AddLog("D","Admin/EditUser",$ID);
+                        }
+                        catch(Exception $ex){
+                            AddErrorLog("D","Admin/EditUser",$ID,$ex);
+                        }
+                        
                         header("Location:". URL ."Admin/Users");
                         exit;
                     }
@@ -24,7 +32,13 @@
                             'RoleId' => $_POST["Role"]
                         );
 
-                        UpdateUserRole($data);
+                        try{
+                            UpdateUserRole($data);
+                            AddLog("U","Admin/EditUser",$ID);
+                        }
+                        catch(Exception $ex){
+                            AddErrorLog("U","Admin/EditUser",$ID,$ex);
+                        }
                     }
                 }
 
@@ -44,7 +58,14 @@
             function EditList($ID){
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(isset($_POST["delete"])){
-                        DeleteList($ID);
+                        try{
+                            DeleteList($ID);
+                            AddLog("D","Admin/EditList",$ID);
+                        }
+                        catch(Exception $ex){
+                            AddErrorLog("D","Admin/EditList",$ID,$ex);
+                        }
+                        
                         header("Location:". URL ."Admin/Lists");
                         exit;
                     }
@@ -60,7 +81,13 @@
                             'itemStats' => $_POST["itemStatus"]
                         );
 
-                        UpdateList($data);
+                        try{
+                            UpdateList($data);
+                            AddLog("U","Admin/EditList",$ID);
+                        }
+                        catch(Exception $ex){
+                            AddErrorLog("U","Admin/EditList",$ID,$ex);
+                        }
                     }
                 }
 

@@ -71,5 +71,5 @@
         `;
         $("#inputs").append(html);
         itemCount = itemCount + 1;
-    });   
+    });  
 </script>
