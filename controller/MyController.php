@@ -26,7 +26,6 @@
                     catch(Exception $ex){
                         AddErrorLog("D","My/EditList",$ID,$ex);
                     }
-                    
 
                     header("Location:".URL."My/");
                     exit;
@@ -142,7 +141,7 @@
                 AddLog("U","My/SaveSettings",$_SESSION["userId"]);
             }
             catch(Exception $ex){
-                AddErrorLog("D","My/RemoveItem",$_SESSION["userId"],$ex);
+                AddErrorLog("U","My/SaveSettings",$_SESSION["userId"],$ex);
             }
             
         }

@@ -9,11 +9,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="<?= URL ?>css/style.css">
 	<link rel="stylesheet" href="<?= URL ?>css/bootstrap.css">
-	<link rel="stylesheet" href="<?= URL ?>css/bootstrap.css.map">
 	<link rel="stylesheet" href="<?= URL ?>css/animate.css">
 	<script src="<?= URL ?>js/jquery-3.3.1.min.js"></script>
 	<script src="<?= URL ?>js/main.js"></script>
 	<script src="<?= URL ?>js/bootstrap-notify.js"></script>
+	<script src="<?= URL ?>js/fancyTable.js"></script>
 
 	<title>To Do List</title>	
 </head>
@@ -41,6 +41,7 @@
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="<?= URL ?>Admin/Users">User Management</a>
 							<a class="dropdown-item" href="<?= URL ?>Admin/Lists">List Management</a>
+							<a class="dropdown-item" href="<?= URL ?>Log/">Log</a>
 						</div>
 					</li>
 				<?php endif ?>

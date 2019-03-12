@@ -28,3 +28,10 @@
 
         $query->execute();
     }
+
+    function GetTopHundredLogs(){
+        $db = openDatabaseConnection();
+        $query = $db -> prepare("SELECT * FROM LogTable order by LogDate DESC LIMIT 100");
+        $query->execute();
+        return $query->fetchAll();
+    }

@@ -6,9 +6,15 @@
         $query = $db->prepare("SELECT 
             L.Id,
             L.Name,
-            (SELECT count(i.Id) from ItemsList i where i.ListId = L.Id) as 'ListItemsCount' 
+            (CASE
+                when (select SL.Id from SharedLists SL where SL.SharedListId = L.Id and SL.VisitorId = :uid) is not null then 'true'
+                else 'false'
+            END) as 'Shared',
+            (SELECT count(i.Id) from ItemsList i where i.ListId = L.Id) as 'ListItemsCount'
+            
             FROM ToDoLists L 
-            where L.UserId = :uid");
+            left join SharedLists s on :uid = s.VisitorId
+            where L.UserId = :uid or L.Id = s.SharedListId");
 
         $query-> bindparam(':uid',$_SESSION["userId"]);
 

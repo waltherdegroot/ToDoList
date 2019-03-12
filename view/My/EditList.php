@@ -2,10 +2,7 @@
     $id = $list[0]["ListId"];
 ?>
 <div class="row">
-    <div class="col-md-2">
-
-    </div>
-    <div class="col-md-8">
+    <div class="col-md-12">
         <form action="<?= URL ?>My/EditList/<?= $id ?>" method="POST">
             <div class="card item-card">       
                 <div class="card-header">
@@ -14,61 +11,59 @@
                     <input type="hidden" name="ListId" value="<?= $id ?>">
                 </div>
                 <div class="card-body">
-                    <?php
-                        $i = 0;
-                        if($list[0]["ItemId"] != null){
-                            foreach($list as $item => $value){
+                    <div id="allItems">
+                        <table id="itemTable" class="table table-striped">
+                            <thead>
+                                <th disabled>Name</th>
+                                <th disabled>Description</th>
+                                <th style="width: 1%">Duration</th>
+                                <th>Status</th>
+                                <th disabled></th>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 0;
+                                foreach($list as $item => $value): 
+                                    $status;
+                                    switch($value["ItemStatus"]){
+                                        case 1:
+                                        $status = "Done";
+                                            break;
+                                        case 0:
+                                        $status = "To Do";
+                                            break;
+                                    };
+                                ?>
+                                    <tr id="item<?= $value["ItemId"] ?>">
+                                        <td>
+                                            <input type="hidden" name="itemId[<?= $i ?>]" value="<?= $value["ItemId"] ?>">
+                                            <input type="text" class="form-control inputs" name="itemName[<?= $i ?>]" value="<?= $value["ItemName"] ?>">
+                                        </td> 
+                                        <td>
+                                            <textarea class="form-control inputs" name="itemDescription[<?= $i ?>]"><?= $value["ItemDescription"] ?></textarea>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control inputs" name="itemDuration[<?= $i ?>]" value="<?= $value["ItemDuration"] ?>">
+                                        </td>
+                                        <td>
+                                            <label id="statusLabel<?= $i ?>" class="statusLabel"><?= $status ?></label>
 
-                                $itemId = $value["ItemId"];
-                                $itemName = $value["ItemName"];
-                                $itemDescription = $value["ItemDescription"];
-                                $itemStatus = $value["ItemStatus"];
-                                $itemDuration = $value["ItemDuration"];
+                                            <?php if($value["ItemStatus"] == 0): ?>
+                                                <input id="status<?= $i ?>" type="checkbox" class="form-control inputs checkbox" name="itemstatus[<?= $i ?>]" style="display:none;">
+                                            <?php else: ?>
+                                                <input id="status<?= $i ?>" type="checkbox" class="form-control inputs checkbox" name="itemstatus[<?= $i ?>]" style="display:none;" checked>
+                                            <?php endif ?>
 
-                                $checkbox = "Done: <input type='checkbox' id='status".$i."' class='checkbox inputs' />";
-
-                                if($itemStatus != 0){
-                                    $checkbox = "Done: <input type='checkbox' id='status".$i."' class='checkbox inputs' checked />";
-                                }
-
-                                $html = "
-                                <div class='items ' id='item".$itemId."'>
-                                    <div class='item-header row'>
-                                        <input type='hidden' name='itemId[".$i."]' value='".$itemId."'>
-                                        <div class='col-md-3 item-Name'>
-                                            <input type='text' class='form-control inputs' name='itemName[".$i."]'  value='".$itemName."'/>
-                                        </div>
-                                        <div class='col-md-3 item-Duration'>
-                                            <input type='number' class='form-control inputs' name='itemDuration[".$i."]' min='10' value='".$itemDuration."'/> 
-                                        </div>
-                                        <div class='col-md-3 item-Status'>
-                                                ".$checkbox."
-                                                <input type='hidden' id='itemStatus".$i."' name='itemStatus[".$i."]' value='".$itemStatus."'>
-                                        </div>
-                                        <div class='col-md-3 item-Status'>
-                                                <span id='itemDel".$itemId."' class='btn btn-warning item-Delete'> Delete </span>
-                                        </div>
-                                    </div>
-                                    <div class='item-body'>
-                                        <div class='item-group '>
-                                        <textarea type='text' name='itemDescription[".$i."]' class='form-control inputs'>" .$itemDescription. "</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr id='itemHR".$itemId."'>";
-
-                                echo $html;
-
-                                $i = $i + 1;
-                            }
-                        }else{
-                            $html = "<div>No items Found</div>";
-                            echo $html;
-                        }
-                        
-                    ?>
+                                            <input type='hidden' id='itemStatus<?= $i ?>' name='itemStatus["<?=$i?>"]' value='<?= $value["ItemStatus"] ?>'>
+                                        </td>
+                                        <td><span id='itemDel<?= $value["ItemId"] ?>' class='btn btn-warning item-Delete'> Delete </span></td>
+                                    </tr>
+                                    <?php $i = $i + 1 ?>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    </div>
                     <div id="inputs">
-
                     </div>
                 </div>
                 <div class="card-footer">
@@ -86,12 +81,16 @@
             </div>
         </form>
     </div>
-    <div class="col-md-2">
-
-    </div>
 </div>
 
 <script type="text/javascript">
+    $("#itemTable").fancyTable({
+        sortColumn:2,
+        sortable: true,
+        searchable: false,
+        glabalSearch: false
+    })
+
     $(".inputs").prop("disabled",true);
     $("#saveBtn").prop("disabled",true);
 
@@ -105,6 +104,7 @@
         $("#delCheck").show();
         $("#delBtn").show();
         $("#addInputBtn").show();
+        $(".checkbox").show();
 
         $("#editBtn").hide();
         $("#listTitle").hide();
@@ -118,10 +118,12 @@
         if ($(this).is(':checked')) {
             var statusId = $(this).attr("id").replace("status","");
             $(document).find("#itemStatus" + statusId).val("1");
+            $(document).find("#statusLabel" + statusId).text("Done");
         }
         else{
             var statusId = $(this).attr("id").replace("status","");
             $(document).find("#itemStatus" + statusId).val("0");
+            $(document).find("#statusLabel" + statusId).text("To Do");
         }
     });
 
@@ -142,8 +144,7 @@
         context: this
         }).done(function() {
             $(document).find("#item"+itemId).prop("disabled",true);
-            $(document).find("#item"+itemId).hide();
-            $(document).find("#itemHR"+itemId).hide();
+            $(document).find("#item"+itemId).remove();
 
             CreateNotification("Remove Item Succesful",null,"success");
         });
@@ -171,6 +172,7 @@
         $("#inputs").append(html);
         itemCount = itemCount + 1;
     });
+
 
 </script>
 
